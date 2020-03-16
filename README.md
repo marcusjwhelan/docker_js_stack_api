@@ -89,13 +89,31 @@ Docker hub pro tip
 docker tag local-image:tagname new-repo:tagname
 docker push new-repo:tagname
 ```
-
-1. build
+1. First create repo in docker hub {{docker-js-stack-api}}
+2. build
 ```bash
 docker build -t mjwrazor/docker-js-stack-api:v0.1.0 .
 ```
 
-2. push
+3. push
 ```bash
 docker push mjwrazor/docker-js-stack-api:v0.1.0  
 ```
+
+## Test kubernetes deployment.yml
+
+```bash
+kubectl apply --validate=true --dry-run=true -f deployment.yml
+kubeclt apply --validate=true -f deployment.yml
+kubectl get services
+```
+
+Should get localhost for external IP and be able to go to localhost and get welcome.
+
+Shut down test
+```bash
+kubectl delete deploy/api svc/api
+```
+
+# Setting up CircleCI
+Make sure you have circleci account and you have connected it with github.

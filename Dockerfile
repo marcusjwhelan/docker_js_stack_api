@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # install npm
-RUN npm install -qy
+RUN npm install -qy --production
 
 COPY . .
 

@@ -11,7 +11,7 @@ spec:
     targetPort: 8080 # our nodejs app listens on port 8080
   selector:
     app: api
-  type: NodePort
+  type: LoadBalancer
 status:
   loadBalancer: {}
 ---
@@ -26,7 +26,8 @@ spec:
   selector:
     matchLabels:
       app: api
-  strategy: {}
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
