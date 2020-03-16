@@ -1,3 +1,4 @@
+## Optional local dev outside of docker
 ```bash
 npm install
 ```
@@ -27,7 +28,9 @@ create user 'utodo'@'localhost' identified by 'utodo';
 GRANT ALL PRIVILEGES ON ctodo.* to 'utodo'@'localhost';
 
 ```
+---
 
+## Duild with Docker
 Create the docker image of the application
 ***-t*** adds tag to build
 ```bash
@@ -51,7 +54,7 @@ docker run --name node-dev-name --rm -it -p 8000:8000 -v ${PWD}:/app node-dev-ta
 Make sure you have the port that is being exposed set to the same exposed port in server.js
 
 
-## Running development with mysql running as well - local only
+## Running development with mysql running as well in Docker - local only
 
 run docker compose to start the development nodejs server + start mysql up and init with items in /db-service
 
@@ -78,4 +81,21 @@ docker container inspect node_comp_dev
 
 # watch logs
 docker contaienr node-comp_dev --follow
+```
+
+# Push to docker hub
+Docker hub pro tip
+```bash
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+```
+
+1. build
+```bash
+docker build -t mjwrazor/docker-js-stack-api:v0.1.0 .
+```
+
+2. push
+```bash
+docker push mjwrazor/docker-js-stack-api:v0.1.0  
 ```

@@ -18,8 +18,8 @@ status:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-labels:
-  app: api
+  labels:
+    app: api
   name: api
 spec:
   replicas: 1
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: docker-js-stack-api
+        image: mjwrazor/docker-js-stack-api:v0.1.0
         imagePullPolicy: Always
         resources: {}
         stdin: true
