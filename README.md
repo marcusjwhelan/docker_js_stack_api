@@ -120,8 +120,8 @@ Make sure you have circleci account and you have connected it with github.
 
 Make a circleCi directory and the config file
 ```bash
-mkdir .circle
-cd .circle
+mkdir .circleci
+cd .circleci
 touch config.yml
 cd ..
 ```
