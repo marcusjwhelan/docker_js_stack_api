@@ -84,7 +84,7 @@ docker contaienr node-comp_dev --follow
 ```
 
 # Push to docker hub
-Docker hub pro tip
+Docker hub pro tip - to release several tags for the same build
 ```bash
 docker tag local-image:tagname new-repo:tagname
 docker push new-repo:tagname
@@ -116,4 +116,16 @@ kubectl delete deploy/api svc/api
 ```
 
 # Setting up CircleCI
-Make sure you have circleci account and you have connected it with github.
+Make sure you have circleci account and you have connected it with github. 
+
+Make a circleCi directory and the config file
+```bash
+mkdir .circle
+cd .circle
+touch config.yml
+cd ..
+```
+
+Set up config.yml with the basic docker hub build context for latest and tags. Commit to git and then in circleCi select project and "Set Up Project"
+
+
