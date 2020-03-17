@@ -2,21 +2,29 @@ version: 2.1
 executors:
   docker-publisher:
     environment:
+      # My image to build
       IMAGE_NAME: mjwrazor/docker-js-stack-api
     docker:
+    # Docker container used to build my docker image
       - image: circleci/buildpack-deps:stretch
 jobs: 
   build:
+    # use executor fix duplication
     executor: docker-publisher
     steps:
+      # checkout the source code to use
       - checkout
+      # tells circleci to allocate a new docker engine separate to execute docker commands
       - setup_remote_docker
+      # now build image
       - run:
         name: Build Docker image
         command: docker build -t $IMAGE_NAME:latest .
+      # save build so next job can use it
       - run:
         name: Archive Docker image
         command: docker save -o image.tar $IMAGE_NAME
+      # now persist it to workspaces
       - persist_to_workspace:
         root: .
         paths:
@@ -24,20 +32,25 @@ jobs:
   publish-latest:
     executor: docker-publisher
     steps:
+      # now attach saved workspace to retrieve image
       - attach_workspace:
         at: /tmp/workspace
       - setup_remote_docker
+      # load retrieved image to docker to be pushed
       - run:
         name: Load archived Docker Image
         command: docker load -i /tmp/workspace/image.tar
       - run:
+        # finally push to docker hub. make sure $DOCKERHUB_PASS & $DOCKERHUB_USERNAME env variables are set in circleci project
         name: Publish Docker Image to Docker Hub
+        # CIRCLE_BUILD_NUM auto set by circleCI can be used to add a more granular release # for the latest release
         command: |
                   echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                   IMAGE_TAG="0.0.${CIRCLE_BUILD_NUM}"
                   docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
                   docker push $IMAGE_NAME:latest
                   docker push $IMAGE_NAME:$IMAGE_TAG
+  # publish the specific tag of this release as well
   publish-tag:
     executor: docker-publisher
     steps:
@@ -49,6 +62,7 @@ jobs:
         command: docker load -i /tmp/workspace/image.tar
       - run:
         name: Publish Docker Image to Docker Hub
+        # CIRCLE_TAG is set automatically by CircleCI
         command: |
                   echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                   IMAGE_TAG=${CIRCLE_TAG/v/''}
@@ -57,6 +71,7 @@ jobs:
                   docker push $IMAGE_NAME:$IMAGE_TAG
 workflows:
   version: 2
+  # only build docker image when git push to master branch
   build-master:
     jobs:
     - build:
@@ -69,14 +84,15 @@ workflows:
       filters:
         branches:
           only: master
+  # build same image but with the git tag given        
   build-tags:
     jobs:
       - build:
         filters:
           tags:
-            only: /^v.*/ 
+            only: /^v.*/ # matches on any that starts with v
           branches:
-            ignore: /.*/ 
+            ignore: /.*/ # dont execute on branches
       - publish-tag:
           requires:
             - build
