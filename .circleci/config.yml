@@ -1,4 +1,14 @@
 version: 2.1
+workflow-branch: &workflow-branch
+  filters:
+    tags:
+      only: /^v.*/
+    branches:
+      ignore: /.*/
+workflow-master: &workflow-master
+  filters:
+    branches:
+      only: master
 executors:
   docker-publisher:
     environment:
@@ -71,42 +81,24 @@ workflows:
   build-master:
     jobs:
       - test:
-          filters:
-            branches:
-              only: master
+          <<: *workflow-master
       - build:
           requires:
             - test
-          filters:
-            branches:
-              only: master
+          <<: *workflow-master
       - publish-latest:
           requires:
             - build
-          filters:
-            branches:
-              only: master
+          <<: *workflow-master
   build-tags:
     jobs:
       - test:
-          filters:
-            tags:
-              only: /^v.*/ 
-            branches:
-              ignore: /.*/ 
+          <<: *workflow-branch
       - build:
           requires:
             - test
-          filters:
-            tags:
-              only: /^v.*/ 
-            branches:
-              ignore: /.*/ 
+          <<: *workflow-branch
       - publish-tag:
           requires:
             - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+          <<: *workflow-branch
