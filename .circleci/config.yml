@@ -3,11 +3,11 @@ executors:
   docker-publisher:
     environment:
       IMAGE_NAME: mjwrazor/docker-js-stack-api
-    docker:
-      - image: circleci/buildpack-deps:stretch
 jobs: 
   build-test:
     executor: docker-publisher
+    docker:
+      -image: circleci/node:13.10-stretch-browsers
     steps:
       - checkout
       - setup_remote_docker
@@ -19,7 +19,7 @@ jobs:
           command: docker run -d --rm --name node_app $IMAGE_NAME:latest
       - run:
           name: Run Node Tests
-          command: docker exec -ti node_app sh npm i -D && npm run test
+          command: docker exec -ti node_app bash npm i -D && npm run test
       - run:
           name: Stop Container
           command: docker stop node_app
@@ -32,6 +32,8 @@ jobs:
             - ./image.tar
   publish-latest:
     executor: docker-publisher
+    docker:
+      - image: circleci/buildpack-deps:stretch
     steps:
       - attach_workspace:
           at: /tmp/workspace
