@@ -26,15 +26,6 @@ jobs:
           name: Build Docker Image
           command: docker build -t $IMAGE_NAME:latest .
       - run:
-          name: Run Docker Image
-          command: docker run -d --rm --name node_app $IMAGE_NAME:latest
-      - run:
-          name: Run Node Tests
-          command: docker exec -ti node_app sh npm i -D && npm run test
-      - run:
-          name: Stop Container
-          command: docker stop node_app
-      - run:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
       - persist_to_workspace:
