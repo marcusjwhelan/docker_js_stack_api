@@ -7,7 +7,7 @@ jobs:
   build-test:
     executor: docker-publisher
     docker:
-      -image: circleci/node:13.10-stretch-browsers
+      - image: circleci/node:13.10-stretch-browsers
     steps:
       - checkout
       - setup_remote_docker
