@@ -128,4 +128,8 @@ cd ..
 
 Set up config.yml with the basic docker hub build context for latest and tags. Commit to git and then in circleCi select project and "Set Up Project"
 
+Then go to settings and add environment variables DOCKERHUB_USERNAME & DOCKERHUB_PASS which should then map correctly into the config.yml for circleci.
 
+Once this is done git push and circleci will build the image and push to docker hub.
+
+To push a specific tag. Create a release with a tag. Or tag a commit.
