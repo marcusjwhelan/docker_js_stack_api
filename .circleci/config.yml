@@ -19,7 +19,7 @@ jobs:
           command: docker run -d --rm --name node_app $IMAGE_NAME:latest
       - run:
           name: Run Node Tests
-          command: docker exec -ti node_app npm i -D && npm run test
+          command: docker exec -ti node_app sh npm i -D && npm run test
       - run:
           name: Stop Container
           command: docker stop node_app
