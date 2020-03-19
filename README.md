@@ -39,14 +39,14 @@ docker build -t node-prod .
 
 Once built we can run the server
 ```bash
-docker run -d -p 8000:8000 node-prod // run detached
-docker run -it -p 8000:8000 node-prod // run interactive
+docker run -d -p 8080:8080 node-prod // run detached
+docker run -it -p 8080:8080 node-prod // run interactive
 ```
 
 Live reloading option for development
 ```bash
 docker build -f Dockerfile.dev -t node-dev-tag .
-docker run --name node-dev-name --rm -it -p 8000:8000 -v ${PWD}:/app node-dev-tag
+docker run --name node-dev-name --rm -it -p 8080:8080 -v ${PWD}:/app node-dev-tag
 ```
 
 ## Note -
@@ -98,21 +98,6 @@ docker build -t mjwrazor/docker-js-stack-api:v0.1.0 .
 3. push
 ```bash
 docker push mjwrazor/docker-js-stack-api:v0.1.0  
-```
-
-## Test kubernetes deployment.yml
-
-```bash
-kubectl apply --validate=true --dry-run=true -f deployment.yml
-kubeclt apply --validate=true -f deployment.yml
-kubectl get services
-```
-
-Should get localhost for external IP and be able to go to localhost and get welcome.
-
-Shut down test
-```bash
-kubectl delete deploy/api svc/api
 ```
 
 # Setting up CircleCI

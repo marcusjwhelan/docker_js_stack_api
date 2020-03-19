@@ -1,28 +1,11 @@
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: api
-  name: api
-spec:
-  ports:
-  - port: 80 # expose the service on internal port 80
-    protocol: TCP
-    targetPort: 8080 # our nodejs app listens on port 8080
-  selector:
-    app: api
-  type: LoadBalancer
-status:
-  loadBalancer: {}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: api
-  name: api
+  name: api-deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: api
@@ -34,9 +17,9 @@ spec:
         app: api
     spec:
       containers:
-      - name: api
-        image: mjwrazor/docker-js-stack-api:v0.1.0
-        imagePullPolicy: Always
+      - image: mjwrazor/docker-js-stack-api:v0.1.0
+        name: api-container
+        imagePullPolicy: IfNotPresent
         resources: {}
         stdin: true
         tty: true

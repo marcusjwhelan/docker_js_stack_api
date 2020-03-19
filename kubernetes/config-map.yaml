@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-side-configs
+data:
+  PORT: "8080"
+  CLIENT: 33.33.33:80
+  MYSQL_URL: db-service.default
