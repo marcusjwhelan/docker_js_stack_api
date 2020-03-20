@@ -6,8 +6,9 @@ metadata:
     type: local
 spec:
   storageClassName: manual # refer to k8s provider ~change this~
-  capacity: 1Gi
+  capacity: 
+    storage: 1Gi
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   hostPath:
     path: "/mnt/data"

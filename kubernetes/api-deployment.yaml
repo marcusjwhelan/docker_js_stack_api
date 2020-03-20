@@ -11,13 +11,13 @@ spec:
       app: api
   strategy:
     type: Recreate
-  template:
+  template: 
     metadata:
       labels:
         app: api
     spec:
       containers:
-      - image: mjwrazor/docker-js-stack-api:v0.1.0
+      - image: mjwrazor/docker-js-stack-api:latest
         name: api-container
         imagePullPolicy: IfNotPresent
         resources: {}
@@ -30,19 +30,9 @@ spec:
         - npm
         - run
         - start
-        env:
-        - name: MYSQL_DB
-          value: ctodo
-        - name: MYSQL_HOST
-          value: db
-        - name: MYSQL_PASSWORD
-          value: example
-        - name: MYSQL_PORT
-          value: "3306"
-        - name: MYSQL_USER
-          value: test
-        - name: PORT
-          value: "8080"
+        envFrom:
+        - configMapRef:
+            name: server-side-configs
       restartPolicy: Always
       volumes: null
       serviceAccountName: ""

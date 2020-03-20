@@ -10,18 +10,21 @@ spec:
     matchLabels:
       app: db
   strategy:
-    type: Recreate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        apps: db
+        app: db
     spec:
       containers:
       - image: mysql:8.0.19
         name: db-container
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPorts: 3306
+        - containerPort: 3306
         args:
         - --default-authentication-plugin=mysql_native_password
         env:

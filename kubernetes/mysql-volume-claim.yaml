@@ -1,11 +1,11 @@
 apiVersion: v1
-kind: persistentVolumeClaim
+kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
 spec:
   storageClassName: manual # refer to k8s provider ~change this~
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
