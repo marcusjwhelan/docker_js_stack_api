@@ -4,30 +4,7 @@ npm install
 ```
 
 create db
-```bash
-mysql -u root -p
-# enter pass for local computer. This is not the docker section yet
-
-# crate todo db
-create database ctodo;
-
-# then create table
-CREATE TABLE IF NOT EXISTS `customers` (
-id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-email varchar(255) NOT NULL,
-name varchar(255) NOT NULL,
-active BOOLEAN DEFAULT false
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-### OPTIONAL
-# create user. restrict to this machine localhost !! OPTIONAL - could use root
-create user 'utodo'@'localhost' identified by 'utodo';
-
-# grant user priv for db !! OPTIONAL - could use root
-GRANT ALL PRIVILEGES ON ctodo.* to 'utodo'@'localhost';
-
-```
+check out db-service init.sql
 ---
 
 ## Duild with Docker
@@ -118,3 +95,9 @@ Then go to settings and add environment variables DOCKERHUB_USERNAME & DOCKERHUB
 Once this is done git push and circleci will build the image and push to docker hub.
 
 To push a specific tag. Create a release with a tag. Or tag a commit.
+
+# NOTES
+For the server. if you have CORS set up with origin then credentials needs to be true and if the IP is localhost and the PORT is 80 then you don't need to specify the port. `http://localhost` 
+
+## Get api-deployment logs out to file
+ kubectl logs -f deployment/api-deployment > api-logs.txt

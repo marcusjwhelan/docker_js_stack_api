@@ -12,7 +12,7 @@ RUN npm install -qy --production
 COPY . .
 
 # expose Port to network
-EXPOSE 8000
+EXPOSE 8080
 
 # run on
 CMD ["npm", "run", "start"]

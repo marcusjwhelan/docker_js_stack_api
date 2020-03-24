@@ -4,8 +4,8 @@ metadata:
   name: server-side-configs
 data:
   PORT: "8080"
-  CLIENT_URL: localhost:80
+  CLIENT_URL: http://localhost
   MYSQL_HOST: db-service.default
-  MYSQL_USER: root
+  MYSQL_USER: test
   MYSQL_PASSWORD: example
   MYSQL_DB: ctodo
