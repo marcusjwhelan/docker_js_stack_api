@@ -3,6 +3,11 @@ kind: Service
 metadata:
   labels:
     app: api
+    app.kubernetes.io/name: node
+    app.kubernetes.io/instance: node-1
+    app.kubernetes.io/version: "0.1.0"
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: backend
   name: api-service
 spec:
   ports:
@@ -10,7 +15,7 @@ spec:
     protocol: TCP
     targetPort: 8080 # our nodejs app listens on port 8080
   selector:
-    app: api
+    app: api # select this application to service
   type: LoadBalancer
 status:
   loadBalancer: {}

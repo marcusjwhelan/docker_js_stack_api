@@ -3,6 +3,11 @@ kind: Service
 metadata:
   labels:
     app: db
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/instance: mysql-1
+    app.kubernetes.io/version: "8.0.19"
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: backend
   name: db-service
 spec:
   ports:
