@@ -15,5 +15,6 @@ spec:
     targetPort: 3306
   selector:
     app: db
+  clusterIP: None
 status:
   loadBalancer: {}

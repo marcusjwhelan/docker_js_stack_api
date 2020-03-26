@@ -22,8 +22,6 @@ spec:
       labels:
         app: db # has to match .spec.selector.matchLabels
     spec:
-      nodeSelector:
-        workload: node-selector-db
       affinity:
         # prevent replicas of this pod on a single node
         podAntiAffinity:
@@ -53,6 +51,9 @@ spec:
           value: ctodo
         - name: MYSQL_ROOT_PASSWORD
           value: example
+        livenessProbe:
+          tcpSocket:
+            port: 3306
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
