@@ -26,6 +26,8 @@ spec:
       labels:
         app: api
     spec:
+      nodeSelector:
+        workload: node-selector-app
       affinity:
         # prevent replicas of this pod on a single node
         podAntiAffinity:

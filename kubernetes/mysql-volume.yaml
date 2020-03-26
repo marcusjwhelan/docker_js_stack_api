@@ -10,10 +10,19 @@ metadata:
     app.kubernetes.io/component: database
     app.kubernetes.io/part-of: backend
 spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes/hostname
+          operator: In
+          values:
+          - node-selector-db
   storageClassName: manual # refer to k8s provider ~change this~
   capacity: 
     storage: 1Gi
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/mnt/data"

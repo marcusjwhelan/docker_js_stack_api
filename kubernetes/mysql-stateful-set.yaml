@@ -22,6 +22,8 @@ spec:
       labels:
         app: db # has to match .spec.selector.matchLabels
     spec:
+      nodeSelector:
+        workload: node-selector-db
       affinity:
         # prevent replicas of this pod on a single node
         podAntiAffinity:
