@@ -98,6 +98,3 @@ To push a specific tag. Create a release with a tag. Or tag a commit.
 
 # NOTES
 For the server. if you have CORS set up with origin then credentials needs to be true and if the IP is localhost and the PORT is 80 then you don't need to specify the port. `http://localhost` 
-
-## Get api-deployment logs out to file
- kubectl logs -f deployment/api-deployment > api-logs.txt
